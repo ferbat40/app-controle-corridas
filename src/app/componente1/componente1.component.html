@@ -1,0 +1,30 @@
+
+<div>
+<nav>
+  <div  class="#212121 grey darken-4 nav-wrapper">
+    <a href="#!" class="brand-logo"><i class="medium material-icons">directions_run</i></a>
+    <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+    <ul class="right hide-on-med-and-down">
+      <li><a routerLink="/inclusao">Corrida</a></li>
+      <li><a routerLink="/suplemento">Suplementos</a><li>
+      <li><a routerLink="/marca">Marcas</a></li>
+      <li><a routerLink="/sobre">Sobre</a></li>
+    </ul>
+  </div>
+</nav>
+
+
+<ul  class="amber sidenav" id="mobile-demo">
+  <i class="large material-icons">directions_run</i>
+  <li><a routerLink="/inclusao">Incluir Corrida</a></li>
+  <li><a routerLink="/suplemento">Suplementos</a></li>
+  <li><a routerLink="/marca">Marcas</a></li>
+  <li><a routerLink="/sobre">Sobre</a></li>
+</ul>
+
+
+
+<div class ="picture"
+style="height: 400px;"
+ [ngStyle]="{'background': '#fff url(' + this.imgURL + ') no-repeat 0 0 '}">        
+</div>

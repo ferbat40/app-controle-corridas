@@ -1,0 +1,185 @@
+<div class="container contact">
+  <h5>Cadastro de Corridas</h5>
+  <h6>Dados da Corrida</h6>
+  <hr />
+  <div class="row">
+   
+    <form class="col s12" #form="ngForm" (submit)="onSubmit()">
+      <div class="input-field col s12">
+        <input
+          id="input-local"
+          name="input-local"
+          type="text"
+          class="validate"
+          [(ngModel)]="this.corrida.local"
+          pattern="^(\s?[A-ZÀ-Ú][a-zà-ú]*)+(\s[a-zà-ú]*)?(\s[A-ZÀ-Ú][a-zà-ú]*)+"
+          #local="ngModel"
+          required
+        />
+        <label for="input-local">Local *</label>
+        <div class="red-text" [hidden]="local.valid || local.untouched">
+          informe o local da corrida com pelo menos duas palavras, com a primeira letra de cada palavra em maiúscula  
+        </div>
+      </div>
+
+      <div class="input-field col s12">
+        <input
+          id="input-nmcorridas"
+          name="input-nmcorridas"
+          type="text"
+          class="validate"
+          [(ngModel)]="this.corrida.corridas"
+          pattern="^[a-z]+([\.-]?[a-z]+[0-9])*"
+          #nmcorridas="ngModel"
+          required
+        />
+        <label for="input-nmcorridas">Corrida *</label>
+        <div class="red-text" [hidden]="nmcorridas.valid || nmcorridas.untouched">
+          Informe descrição da corrida em minusculo sem espaço e o numero da corrida.
+        </div>
+      </div>
+
+    
+      
+     
+      <div class="input-field col s12">
+        <input
+          id="input-dificuldade"
+          name="input-dificuldade"
+          type="text"
+          class="validate"
+          [(ngModel)]="this.corrida.dificuldade"
+          pattern="^[a-z]+([\.-]?[a-z]+)*"
+          #dificuldade="ngModel"
+          required
+        />
+        <label for="input-dificuldade">Dificuldade *</label>
+        <div class="red-text" [hidden]="dificuldade.valid || dificuldade.untouched">
+          Informe a Didificuldade da corrida em letras minusculas
+        </div>
+      </div>
+
+      <div class="input-field col s12">
+        <input
+          id="input-distancia"
+          name="input-distancia"
+          type="text"
+          class="validate"
+          [(ngModel)]="this.corrida.distancia"
+          pattern="^([0-5]{1}\d{1})$|^(\d{1})$"
+          #distancia="ngModel"
+          required
+        />
+        <label for="input-distancia">Distância *</label>
+        <div class="red-text" [hidden]="distancia.valid || distancia.untouched">
+          informe a distancia em numeros.
+        </div>
+      </div>
+
+      <div class="input-field col s12">
+        <input
+          id="input-suplemento"
+          name="input-suplemento"
+          type="text"
+          class="validate"
+          [(ngModel)]="this.corrida.idSuplemento"
+          pattern="(?:\.|,|[0-9])*"
+          #suplemento="ngModel"
+          required
+        />
+        <label for="input-suplemento">ID Suplemento *</label>
+        <div class="red-text" [hidden]="distancia.valid || distancia.untouched">
+          informe o ID do suplemento.
+        </div>
+      </div>
+
+      
+      <div class="input-field col s12 l6">
+        <input
+          id="input-datacorrida"
+          name="input-datacorrida"
+          type="date"
+          class="validate"
+          [(ngModel)]="this.corrida.dataCorrida"
+        />
+        <label for="input-datacorrida">Data da Corrida</label>
+      </div>
+<div>
+      <button
+        class="btn waves-effect waves-light amber darken-4"
+        type="submit"
+        [disabled]="!form.valid"
+      >
+        Enviar
+        <i class="material-icons right">send</i>
+      </button>
+</div>
+    </form>
+  </div>
+
+  <h5 *ngIf="corridas && corridas.length > 0">Cadastradas</h5>
+  <!-- Tabela de corridas -->
+  <table class="highlight" *ngIf="corridas && corridas.length > 0">
+    <thead>
+      <tr>
+        <th>Local</th>
+        <th>Corrida</th>
+        <th>Dificuldade</th>
+        <th>Distancia KM</th>
+        <th>ID Suplemento</th>
+        <th>Nome Suplemento (db.json)</th>
+        <th>Data</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let u of corridas">
+        <td>{{ u.local }}</td>
+        <td>{{ u.corridas }}</td>
+        <td>{{ u.dificuldade }}</td>
+        <td>{{ u.distancia}}</td>
+        <td>{{ u.idSuplemento}}</td>
+        <td>{{ u.descsupl}}</td>
+        <td>{{ u.dataCorrida }}</td>
+        <td class="right">
+          <a
+            ><i class="material-icons my-icon-size" (click)="onEdit(u)"
+              >edit</i
+            ></a
+          >
+          <a
+            ><i
+              class="material-icons my-icon-size"
+              (click)="onDelete(u.corridas,u)"
+              >delete</i
+            ></a
+          >
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div *ngIf="!corridas || corridas!.length == 0">
+    <div class="row">
+      <div class="center-align">
+        
+        <span class="col s12 flow-text"
+          >Nenhuma corrida adicionada!</span
+        >
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<app-modal [show]="modal.show" [content]="modal" (closeEvent)="onCloseModal()">
+</app-modal>
+
+<div>
+<app-acao
+    #acao
+    [tipo]="'Corrida'"
+    (evento)="this.Evento($event)"
+  ></app-acao>
+</div>

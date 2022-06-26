@@ -1,0 +1,113 @@
+<div class="container contact">
+  <h5>Cadastro de Marcas</h5>
+  <h6>Dados da Marca</h6>
+  <hr />
+  <div class="row">
+   
+    <form class="col s12" #form="ngForm" (submit)="onSubmit()">
+      <div class="input-field col s12">
+        <input
+          id="input-local"
+          name="input-local"
+          type="text"
+          class="validate"
+          [(ngModel)]="this.marca.descricao"
+          pattern="^(\s?[A-ZÀ-Ú][a-zà-ú]*)+(\s[a-zà-ú]*)?(\s[A-ZÀ-Ú][a-zà-ú]*)+"
+          #local="ngModel"
+          required
+        />
+        <label for="input-local">Marca *</label>
+        <div class="red-text" [hidden]="local.valid || local.untouched">
+          informe o nome da marca com pelo menos duas palavras, com a primeira letra de cada palavra em maiúscula  
+        </div>
+      </div>
+
+      <div class="input-field col s12">
+        <input
+          id="input-nmcorridas"
+          name="input-nmcorridas"
+          type="text"
+          class="validate"
+          [(ngModel)]="this.marca.descmarca"
+          pattern="^(\s?[A-ZÀ-Ú][a-zà-ú]*)+(\s[a-zà-ú]*)?(\s[A-ZÀ-Ú][a-zà-ú]*)+"
+          #nmcorridas="ngModel"
+          required
+        />
+        <label for="input-nmcorridas">Descrição Marca *</label>
+        <div class="red-text" [hidden]="nmcorridas.valid || nmcorridas.untouched">
+          Informe uma descrição para a marca do suplemento.
+        </div>
+      </div>
+
+
+<div>
+      <button
+        class="btn waves-effect waves-light amber darken-4"
+        type="submit"
+        [disabled]="!form.valid"
+      >
+        Enviar
+        <i class="material-icons right">send</i>
+      </button>
+</div>
+    </form>
+  </div>
+
+  <h5 *ngIf="marcas && marcas.length > 0">Cadastradas</h5>
+  <!-- Tabela de marcas -->
+  <table class="highlight" *ngIf="marcas && marcas.length > 0">
+    <thead>
+      <tr>
+        <th>Codigo</th>
+        <th>Marca</th>
+        <th>Descrição</th>
+         
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let u of marcas">
+        <td>{{ u.id }}</td>
+        <td>{{ u.descricao }}</td>
+        <td>{{ u.descmarca }}</td>
+        
+        <td class="right">
+          <a
+            ><i class="material-icons my-icon-size" (click)="onEdit(u)"
+              >edit</i
+            ></a
+          >
+          <a
+            ><i
+              class="material-icons my-icon-size"
+              (click)="onDelete(u.descricao,u)"
+              >delete</i
+            ></a
+          >
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div *ngIf="!marcas || marcas!.length == 0">
+    <div class="row">
+      <div class="center-align">
+        
+        <span class="col s12 flow-text"
+          >Nenhuma marca adicionada!</span
+        >
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-modal [show]="modal.show" [content]="modal" (closeEvent)="onCloseModal()">
+</app-modal>
+
+<div>
+<app-acao
+    #acao
+    [tipo]="'Marca'"
+    (evento)="this.Evento($event)"
+  ></app-acao>
+</div>
